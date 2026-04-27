@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: python-getting-started-test-svc
+spec:
+  selector:
+    app: python-getting-started
+    env: test
+  ports:
+  - protocol: TCP
+    port: 80
+    targetPort: 8080
+  type: ClusterIP

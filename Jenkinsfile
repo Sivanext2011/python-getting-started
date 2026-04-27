@@ -1,0 +1,95 @@
+pipeline {
+  agent {
+    label 'docker-kubectl'
+  }
+  options {
+    timestamps()
+    disableConcurrentBuilds()
+  }
+  environment {
+    IMAGE_NAME = "docker.io/sivanext/finalsemproject"
+    PROJECT = "python-getting-started"
+    REGISTRY = "docker.io"
+    CLUSTER_NAME = "dev-cluster"
+    KUBE_NAMESPACE = "default"
+    KUBE_CONTEXT = "dev-context"
+    KUBECONFIG_CREDENTIALS = "kubeconfig"
+  }
+  stages {
+    stage('Checkout') {
+      steps {
+        checkout scm
+      }
+    }
+    stage('Build') {
+      steps {
+        sh 'docker build -t $IMAGE_NAME:$BUILD_NUMBER .'
+      }
+    }
+    stage('Unit Test') {
+      steps {
+        sh 'echo "Run unit tests here"'
+      }
+    }
+    stage('Dependency Scan') {
+      steps {
+        sh 'echo "Run OWASP Dependency-Check or Snyk here"'
+      }
+    }
+    stage('Container Scan') {
+      steps {
+        sh 'echo "Run Trivy or Grype scan here"'
+      }
+    }
+    stage('Manifest Validation') {
+      steps {
+        sh 'echo "Run kube-linter or kubeval here"'
+      }
+    }
+    stage('Push Image') {
+      steps {
+        sh 'echo "Authenticate to registry and push image here"'
+      }
+    }
+    stage('Deploy: Dev') {
+      steps {
+        echo "Deploying to cluster $CLUSTER_NAME namespace $KUBE_NAMESPACE"
+        withCredentials([file(credentialsId: env.KUBECONFIG_CREDENTIALS, variable: 'KUBECONFIG')]) {
+          sh 'kubectl config use-context $KUBE_CONTEXT'
+          sh 'kubectl apply -n $KUBE_NAMESPACE -f k8s/dev/'
+        }
+
+      }
+    }
+    stage('Deploy: Test') {
+      when {
+        branch 'main'
+      }
+      steps {
+        withCredentials([file(credentialsId: env.KUBECONFIG_CREDENTIALS, variable: 'KUBECONFIG')]) {
+          sh 'kubectl config use-context $KUBE_CONTEXT'
+          sh 'kubectl apply -n $KUBE_NAMESPACE -f k8s/test/'
+        }
+
+      }
+    }
+    stage('Deploy: Prod') {
+      when {
+        branch 'main'
+      }
+      steps {
+        input message: 'Promote to production?'
+        withCredentials([file(credentialsId: env.KUBECONFIG_CREDENTIALS, variable: 'KUBECONFIG')]) {
+          sh 'kubectl config use-context $KUBE_CONTEXT'
+          sh 'kubectl apply -n $KUBE_NAMESPACE -f k8s/prod/'
+        }
+
+      }
+    }
+  }
+  post {
+    always {
+      sh 'echo "Collect reports and archive artifacts"'
+    }
+  }
+}

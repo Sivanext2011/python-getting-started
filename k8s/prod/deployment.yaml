@@ -1,0 +1,27 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: python-getting-started-prod
+  labels:
+    app: python-getting-started
+    env: prod
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: python-getting-started
+      env: prod
+  template:
+    metadata:
+      labels:
+        app: python-getting-started
+        env: prod
+    spec:
+      containers:
+      - name: python-getting-started
+        image: docker.io/sivanext/finalsemproject:latest
+        ports:
+        - containerPort: 8080
+        securityContext:
+          allowPrivilegeEscalation: false
+          readOnlyRootFilesystem: true
