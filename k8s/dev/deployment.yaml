@@ -1,24 +1,24 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: python-getting-started-dev
+  name: test-dev
   labels:
-    app: python-getting-started
+    app: test
     env: dev
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: python-getting-started
+      app: test
       env: dev
   template:
     metadata:
       labels:
-        app: python-getting-started
+        app: test
         env: dev
     spec:
       containers:
-      - name: python-getting-started
+      - name: test
         image: docker.io/sivanext/finalsemproject:latest
         ports:
         - containerPort: 8080

@@ -1,10 +1,10 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-JENKINS_URL="http://seliiuvd07044.seli.gic.ericsson.se:8080/"
-JOB_NAME="python-getting-started-bootstrap"
-JENKINS_USER="${JENKINS_USER:-replace-me}"
-JENKINS_TOKEN="${JENKINS_TOKEN:-replace-me}"
+JENKINS_URL="http://seliiuvd02756.seli.gic.ericsson.se:8080/"
+JOB_NAME="test-bootstrap"
+JENKINS_USER="admin"
+JENKINS_TOKEN="19bc0766bcfa495b8a837078b7313420"
 CRUMB=$(curl -s --user "$JENKINS_USER:$JENKINS_TOKEN" "$JENKINS_URL/crumbIssuer/api/xml?xpath=concat(//crumbRequestField,":",//crumb)")
 
 curl -sS -X POST \

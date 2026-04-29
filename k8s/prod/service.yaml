@@ -1,10 +1,10 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: python-getting-started-prod-svc
+  name: test-prod-svc
 spec:
   selector:
-    app: python-getting-started
+    app: test
     env: prod
   ports:
   - protocol: TCP

@@ -1,4 +1,4 @@
-# python-getting-started - DevSecOps Starter Kit
+# test - DevSecOps Starter Kit
 
 - Runtime: python
 - Base image: python:3.12-slim
@@ -9,8 +9,8 @@
 - Image namespace: sivanext
 - Image repository: finalsemproject
 - Image: docker.io/sivanext/finalsemproject
-- Jenkins: http://seliiuvd07044.seli.gic.ericsson.se:8080/
-- Jenkins job: python-getting-started-bootstrap
+- Jenkins: http://seliiuvd02756.seli.gic.ericsson.se:8080/
+- Jenkins job: test-bootstrap
 - Jenkins agent label: docker-kubectl
 - Deploy target: kubernetes
 - Cluster: dev-cluster

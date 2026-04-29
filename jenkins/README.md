@@ -1,11 +1,11 @@
 # Jenkins Job Bootstrap
 
-Job name: `python-getting-started-bootstrap`
+Job name: `test-bootstrap`
 Job type: `workflow-multibranch`
 Repository: `https://github.com/Sivanext2011/python-getting-started.git`
 Branch filter: `main`
 Git credentialsId: `git-http-creds`
-Jenkins URL: `http://seliiuvd07044.seli.gic.ericsson.se:8080/`
+Jenkins URL: `http://seliiuvd02756.seli.gic.ericsson.se:8080/`
 Jenkins agent label: `docker-kubectl`
 Kubernetes cluster: `dev-cluster`
 Namespace: `default`

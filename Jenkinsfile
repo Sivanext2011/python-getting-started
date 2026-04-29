@@ -8,7 +8,7 @@ pipeline {
   }
   environment {
     IMAGE_NAME = "docker.io/sivanext/finalsemproject"
-    PROJECT = "python-getting-started"
+    PROJECT = "test"
     REGISTRY = "docker.io"
     CLUSTER_NAME = "dev-cluster"
     KUBE_NAMESPACE = "default"
